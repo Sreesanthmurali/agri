@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MIT BG REMOVER | Mahaguru Institute of Technology</title>
+  <link rel="icon" type="image/png" href="/mit_banner_logo.png" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            terracotta: {
+              50: '#fff5f2',
+              100: '#ffe8e1',
+              500: '#b3451d',
+              600: '#963816',
+              700: '#7a2b0f',
+              800: '#61210a',
+            },
+            mitblue: {
+              50: '#f0f6ff',
+              100: '#e0edff',
+              500: '#0066ff',
+              600: '#0052cc',
+              700: '#003e99',
+            },
+            saffron: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              500: '#f59e0b',
+              600: '#d97706',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans antialiased selection:bg-terracotta-600 selection:text-white">
+
+  <!-- Mahaguru Institute of Technology Official Header -->
+  <header class="border-b border-slate-200 bg-white sticky top-0 z-30 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo Banner -->
+      <div class="flex items-center space-x-4">
+        <a href="/" class="flex items-center group">
+          <img src="/mit_banner_logo.png" alt="MIT BG REMOVER - Mahaguru Institute of Technology" class="h-12 sm:h-14 w-auto object-contain transition-transform group-hover:scale-[1.01]" />
+        </a>
+      </div>
+
+      <!-- Institutional Metrics & Engine Status -->
+      <div class="flex items-center space-x-3 text-xs">
+        <div class="hidden md:flex items-center px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 border border-slate-200">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>
+          <span>Engine: <b id="headerModelBadge" class="font-mono text-terracotta-600 font-bold ml-1">BRIA RMBG-1.4 (In-Browser AI)</b></span>
+        </div>
+        <div class="hidden sm:flex items-center px-3 py-1.5 rounded-lg bg-amber-50 text-amber-800 border border-amber-200 font-medium">
+          <i data-lucide="award" class="w-3.5 h-3.5 mr-1.5 text-amber-600"></i>
+          <span>ISO 35×45mm Calibrated</span>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- Upload Hero Zone -->
+    <section id="uploadSection" class="bg-white border-2 border-dashed border-slate-300 hover:border-mitblue-600 rounded-2xl p-8 sm:p-12 transition-all duration-200 text-center relative overflow-hidden group shadow-sm">
+      <input type="file" id="fileInput" multiple accept="image/*" class="hidden" />
+      <input type="file" id="folderInput" webkitdirectory directory multiple class="hidden" />
+
+      <div class="max-w-xl mx-auto space-y-4">
+        <div class="w-16 h-16 rounded-2xl bg-terracotta-50 border border-terracotta-100 text-terracotta-600 flex items-center justify-center mx-auto group-hover:scale-105 transition-transform shadow-sm">
+          <svg class="w-8 h-8 text-terracotta-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/>
+            <path d="M12 12v9"/>
+            <path d="m16 16-4-4-4 4"/>
+          </svg>
+        </div>
+        
+        <div>
+          <h2 class="text-2xl font-bold font-heading text-slate-900 tracking-tight">Bulk Student Portrait Matting</h2>
+          <p class="text-xs text-slate-500 mt-1 font-medium">Upload student photos or an entire departmental folder (JPG, PNG, WEBP)</p>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <button id="btnBrowseFiles" class="px-6 py-2.5 rounded-xl bg-terracotta-600 hover:bg-terracotta-700 text-white font-semibold text-xs tracking-wide uppercase transition shadow-md shadow-terracotta-600/20 flex items-center space-x-2">
+            <i data-lucide="images" class="w-4 h-4"></i>
+            <span>Select Photos</span>
+          </button>
+          <button id="btnBrowseFolder" class="px-6 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs tracking-wide uppercase transition border border-slate-300 flex items-center space-x-2">
+            <i data-lucide="folder-up" class="w-4 h-4 text-slate-600"></i>
+            <span>Select Student Folder</span>
+          </button>
+        </div>
+
+        <div class="text-xs text-slate-500 flex flex-wrap items-center justify-center gap-4 pt-3 border-t border-slate-100 font-medium">
+          <span class="flex items-center text-emerald-700"><i data-lucide="check" class="w-3.5 h-3.5 mr-1 text-emerald-600"></i> In-Browser AI (100% Private, Zero Server Upload)</span>
+          <span class="flex items-center text-slate-600"><i data-lucide="check" class="w-3.5 h-3.5 mr-1 text-slate-500"></i> Preserves Roll Numbers & Filenames</span>
+          <span class="flex items-center text-mitblue-700"><i data-lucide="check" class="w-3.5 h-3.5 mr-1 text-mitblue-600"></i> Bulk ZIP & Direct Photo Downloads</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Master Studio Dashboard (Config & Biometric Cropper) -->
+    <section id="configSection" class="hidden bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-md space-y-6">
+      
+      <!-- Staged Status & Studio Tabs -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
+        <div>
+          <div class="flex items-center space-x-3">
+            <h3 class="text-base font-bold uppercase tracking-wider text-slate-900 font-heading">Studio Configuration</h3>
+            <span id="stagedCountBadge" class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-terracotta-50 text-terracotta-600 border border-terracotta-200">
+              0 photos staged
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 mt-1">Set background treatment, AI engine, and biometric dimension framing</p>
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <!-- Studio Tab Switchers -->
+          <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs">
+            <button id="tabMattingBtn" class="tab-btn active px-4 py-2 rounded-lg bg-terracotta-600 text-white font-semibold flex items-center space-x-1.5 transition">
+              <i data-lucide="palette" class="w-3.5 h-3.5"></i>
+              <span>Background & Engine</span>
+            </button>
+            <button id="tabCropperBtn" class="tab-btn px-4 py-2 rounded-lg text-slate-600 hover:text-slate-900 font-semibold flex items-center space-x-1.5 transition">
+              <i data-lucide="crop" class="w-3.5 h-3.5"></i>
+              <span>Biometric Framing</span>
+            </button>
+          </div>
+
+          <button id="btnClearStaged" class="text-xs text-slate-500 hover:text-rose-600 transition flex items-center px-3 py-1.5 ml-2 font-medium">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5 mr-1"></i> Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB 1: Background & Engine Configuration -->
+      <div id="tabMattingContent" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Background Replacement -->
+          <div class="space-y-3">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Background Replacement</label>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <button type="button" data-bg="transparent" class="bg-opt-btn active px-3 py-2.5 rounded-xl border border-terracotta-600 bg-terracotta-50 text-terracotta-700 font-semibold flex items-center space-x-2 transition">
+                <span class="w-4 h-4 rounded-full border border-slate-300 bg-transparency-grid"></span>
+                <span>Transparent</span>
+              </button>
+              <button type="button" data-bg="white" class="bg-opt-btn px-3 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white text-slate-700 font-medium flex items-center space-x-2 transition">
+                <span class="w-4 h-4 rounded-full bg-white border border-slate-400"></span>
+                <span>Pure White</span>
+              </button>
+              <button type="button" data-bg="passport_blue" class="bg-opt-btn px-3 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white text-slate-700 font-medium flex items-center space-x-2 transition">
+                <span class="w-4 h-4 rounded-full bg-blue-600 border border-blue-400"></span>
+                <span>Passport Blue</span>
+              </button>
+              <button type="button" data-bg="custom" class="bg-opt-btn px-3 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white text-slate-700 font-medium flex items-center space-x-2 transition">
+                <input type="color" id="customColorPicker" value="#0052cc" class="w-4 h-4 rounded cursor-pointer border-0 p-0 bg-transparent" />
+                <span>Custom Hex</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- AI Model Engine -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">In-Browser AI Engine</label>
+              <span id="modelStatusBadge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">Ready ✅</span>
+            </div>
+            <div class="space-y-2">
+              <select id="modelSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-terracotta-600 font-medium">
+                <option value="briaai/RMBG-1.4">BRIA RMBG-1.4 (WebGPU / WASM Native)</option>
+              </select>
+              <p id="modelDescText" class="text-[11px] text-slate-500 leading-tight">State-of-the-art background segmentation running locally inside the user's browser. Zero server transmission.</p>
+            </div>
+          </div>
+
+          <!-- Filename & Format -->
+          <div class="space-y-3">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Output Naming & Format</label>
+            <div class="space-y-2">
+              <select id="namingRuleSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-terracotta-600 font-medium">
+                <option value="original">Keep Exact Roll Number (e.g. 24CS101.png)</option>
+                <option value="suffix_nobg">Append Suffix (e.g. 24CS101_nobg.png)</option>
+              </select>
+              <select id="formatSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-terracotta-600 font-medium">
+                <option value="png">Output Format: PNG (Lossless Alpha)</option>
+                <option value="jpg">Output Format: JPG (For Solid Color)</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB 2: Biometric Dimensions (SIMPLIFIED TO PASSPORT & CUSTOM ONLY) -->
+      <div id="tabCropperContent" class="hidden space-y-6">
+        
+        <!-- Enable Crop Master Toggle -->
+        <div class="flex items-center justify-between p-4 bg-terracotta-50/60 rounded-xl border border-terracotta-200">
+          <div class="flex items-center space-x-3.5">
+            <input type="checkbox" id="cropEnableToggle" checked class="w-4 h-4 rounded text-terracotta-600 focus:ring-terracotta-500 border-slate-300 cursor-pointer" />
+            <div>
+              <label for="cropEnableToggle" class="text-xs font-bold text-slate-900 cursor-pointer font-heading">
+                Apply Biometric ID Crop & Dimension Sizing to Batch
+              </label>
+              <p class="text-[11px] text-slate-600">Automatically centers head crown, sets 10% headroom, aligns facial midline, and frames shoulders to selected dimensions</p>
+            </div>
+          </div>
+          <span class="text-xs font-mono font-bold text-terracotta-700 bg-white px-3 py-1 rounded-md border border-terracotta-300 shadow-sm">
+            ISO / ICAO Standards
+          </span>
+        </div>
+
+        <!-- Presets: STRICTLY TWO OPTIONS (Passport Size & Custom Dimension) -->
+        <div class="space-y-3">
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Dimension Standards</label>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="presetGrid">
+            
+            <!-- Preset 1: Passport Size Photo Dimension (35 x 45 mm) -->
+            <div class="preset-card active cursor-pointer p-4 bg-white rounded-xl transition flex flex-col justify-between shadow-sm relative overflow-hidden"
+                 data-preset="passport_size" data-w="35" data-h="45" data-unit="mm" data-dpi="300" data-aspect="35:45">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-2">
+                  <span class="w-3 h-3 rounded-full bg-terracotta-600"></span>
+                  <span class="text-sm font-bold text-slate-900 font-heading">Passport Size Photo Dimension</span>
+                </div>
+                <span class="text-xs font-mono font-bold text-terracotta-600 bg-terracotta-50 px-2 py-0.5 rounded border border-terracotta-200">35 × 45 mm</span>
+              </div>
+              
+              <!-- SVG Schematic for Passport Size Photo -->
+              <div class="h-28 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-center p-2 relative overflow-hidden">
+                <svg class="w-full h-full max-h-24" viewBox="0 0 200 120" fill="none">
+                  <rect x="65" y="10" width="70" height="90" rx="4" stroke="#963816" stroke-width="2" fill="#ffffff"/>
+                  <line x1="65" y1="20" x2="135" y2="20" stroke="#0052cc" stroke-width="1" stroke-dasharray="2 2"/>
+                  <text x="140" y="23" fill="#0052cc" font-size="8" font-family="monospace">10% Headroom</text>
+                  <line x1="65" y1="52" x2="135" y2="52" stroke="#f59e0b" stroke-width="1" stroke-dasharray="2 2"/>
+                  <text x="140" y="55" fill="#f59e0b" font-size="8" font-family="monospace">Eye-Line</text>
+                  <line x1="65" y1="80" x2="135" y2="80" stroke="#f59e0b" stroke-width="1" stroke-dasharray="2 2"/>
+                  <text x="140" y="83" fill="#f59e0b" font-size="8" font-family="monospace">Chin Line</text>
+                  <circle cx="100" cy="45" r="16" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+                  <path d="M78 98c0-14 10-22 22-22s22 8 22 22" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+                  <line x1="100" y1="10" x2="100" y2="100" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3 3"/>
+                </svg>
+              </div>
+
+              <div class="mt-3 text-xs text-slate-500 flex justify-between items-center font-medium">
+                <span>300 DPI (High-Density Print)</span>
+                <span class="font-mono font-bold text-slate-800">413 × 531 px</span>
+              </div>
+            </div>
+
+            <!-- Preset 2: Custom Dimension -->
+            <div class="preset-card cursor-pointer p-4 bg-white rounded-xl transition flex flex-col justify-between shadow-sm relative overflow-hidden"
+                 data-preset="custom" data-w="50" data-h="50" data-unit="mm" data-dpi="300" data-aspect="custom">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-2">
+                  <span class="w-3 h-3 rounded-full bg-slate-400"></span>
+                  <span class="text-sm font-bold text-slate-900 font-heading">Custom Dimension</span>
+                </div>
+                <span class="text-xs font-mono text-slate-500 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">User Defined</span>
+              </div>
+
+              <div class="h-28 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-center p-2 relative overflow-hidden">
+                <svg class="w-full h-full max-h-24" viewBox="0 0 200 120" fill="none">
+                  <path d="M40 25h120M40 18v14M160 18v14M40 95h120M40 88v14M160 88v14" stroke="#64748b" stroke-width="1.5"/>
+                  <line x1="100" y1="25" x2="100" y2="95" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3 3"/>
+                  <rect x="75" y="48" width="50" height="24" rx="4" fill="#ffffff" stroke="#f59e0b" stroke-width="1.5"/>
+                  <text x="100" y="64" fill="#0f172a" font-size="11" font-family="monospace" font-weight="bold" text-anchor="middle">W × H</text>
+                </svg>
+              </div>
+
+              <div class="mt-3 text-xs text-slate-500 flex justify-between items-center font-medium">
+                <span>Custom DPI / Units</span>
+                <span class="font-mono text-slate-700">Editable Below</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Custom Dimension Input Controls -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+          <div>
+            <label class="block text-slate-600 font-semibold mb-1">Target Width</label>
+            <input type="number" id="inputCropW" value="35" step="0.1" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 font-mono font-bold focus:border-terracotta-600 focus:outline-none shadow-sm" />
+          </div>
+          <div>
+            <label class="block text-slate-600 font-semibold mb-1">Target Height</label>
+            <input type="number" id="inputCropH" value="45" step="0.1" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 font-mono font-bold focus:border-terracotta-600 focus:outline-none shadow-sm" />
+          </div>
+          <div>
+            <label class="block text-slate-600 font-semibold mb-1">Measurement Unit</label>
+            <select id="selectCropUnit" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 font-medium focus:border-terracotta-600 focus:outline-none shadow-sm">
+              <option value="mm">Millimeters (mm)</option>
+              <option value="in">Inches (in)</option>
+              <option value="px">Pixels (px)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-600 font-semibold mb-1">Print Resolution (DPI)</label>
+            <select id="selectCropDpi" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 font-mono font-semibold focus:border-terracotta-600 focus:outline-none shadow-sm">
+              <option value="300">300 DPI (High-Density Print)</option>
+              <option value="150">150 DPI (Admit Cards / Web)</option>
+              <option value="96">96 DPI (Standard Screen)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Specifications Breakdown -->
+        <div class="p-4 bg-white rounded-xl border border-slate-200 flex flex-wrap items-center justify-between gap-4 text-xs">
+          <div class="flex items-center space-x-2">
+            <span class="text-slate-500 font-medium">Output Size:</span>
+            <span id="specOutputPx" class="font-mono font-bold text-slate-900 text-sm">413 × 531 px</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="text-slate-500 font-medium">Aspect Ratio:</span>
+            <span id="specAspect" class="font-mono font-bold text-terracotta-600">35 : 45 (7 : 9)</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="text-slate-500 font-medium">Print Resolution:</span>
+            <span id="specDpi" class="font-mono font-bold text-mitblue-600">300 DPI</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="text-slate-500 font-medium">Biometric Headroom:</span>
+            <span class="font-mono font-bold text-amber-600">10% Standard</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Studio Master Action Bar -->
+      <div class="pt-5 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-xs text-slate-600 font-medium">
+          Ready to execute: <span id="readySummaryText" class="text-slate-900 font-bold">100 Photos • BRIA RMBG-1.4 • Passport 35×45mm Crop</span>
+        </div>
+
+        <button id="btnStartBatch" class="w-full sm:w-auto px-8 py-3 rounded-xl bg-terracotta-600 hover:bg-terracotta-700 text-white font-semibold text-xs tracking-wider uppercase transition shadow-lg shadow-terracotta-600/25 flex items-center justify-center space-x-2">
+          <i data-lucide="play" class="w-4 h-4 fill-white"></i>
+          <span id="btnStartBatchText">Execute Batch ID Processing</span>
+        </button>
+      </div>
+
+    </section>
+
+    <!-- Live Execution & Progress Bar -->
+    <section id="progressSection" class="hidden bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-md space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center space-x-2.5">
+            <h3 class="text-base font-bold uppercase tracking-wider text-slate-900 font-heading">Processing Batch</h3>
+            <span id="statusBadge" class="px-2.5 py-0.5 text-xs font-mono font-bold rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+              Running In Browser...
+            </span>
+          </div>
+          <p id="currentFileText" class="text-xs text-slate-500 mt-1 truncate max-w-md font-mono">Processing: -</p>
+        </div>
+
+        <!-- DUAL BULK DOWNLOAD CONTROLS (ZIP & INDIVIDUAL PHOTOS DIRECTLY) -->
+        <div class="flex flex-wrap items-center gap-2.5">
+          <!-- 1. Download as ZIP -->
+          <button id="btnDownloadZip" disabled class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-semibold tracking-wide uppercase transition flex items-center space-x-1.5 shadow-sm">
+            <i data-lucide="archive" class="w-4 h-4"></i>
+            <span>Download All as ZIP</span>
+          </button>
+
+          <!-- 2. Download as Individual Photos directly -->
+          <button id="btnDownloadPhotos" disabled class="px-4 py-2 rounded-xl bg-mitblue-600 hover:bg-mitblue-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-semibold tracking-wide uppercase transition flex items-center space-x-1.5 shadow-sm">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Download All as Photos</span>
+          </button>
+
+          <!-- Cancel -->
+          <button id="btnCancelBatch" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 border border-slate-200 text-xs font-medium transition flex items-center space-x-1">
+            <i data-lucide="square" class="w-3.5 h-3.5"></i>
+            <span>Stop</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Linear Progress Bar -->
+      <div class="space-y-2">
+        <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200">
+          <div id="progressBar" class="h-full bg-terracotta-600 rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
+        </div>
+        <div class="flex items-center justify-between text-xs text-slate-500 font-mono">
+          <span id="progressPercentLabel" class="font-bold text-slate-900">0%</span>
+          <span id="progressCountLabel" class="font-medium">0 / 0 images</span>
+        </div>
+      </div>
+
+      <!-- Metrics Row -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+          <span class="text-[10px] font-bold text-slate-500 block uppercase tracking-wider">Completed</span>
+          <span id="statCompleted" class="text-2xl font-bold font-mono text-emerald-600 mt-1 block">0</span>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+          <span class="text-[10px] font-bold text-slate-500 block uppercase tracking-wider">Processing Speed</span>
+          <span id="statSpeed" class="text-2xl font-bold font-mono text-terracotta-600 mt-1 block">0.0 <span class="text-xs font-normal text-slate-500">img/s</span></span>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+          <span class="text-[10px] font-bold text-slate-500 block uppercase tracking-wider">Time Remaining</span>
+          <span id="statEta" class="text-2xl font-bold font-mono text-amber-600 mt-1 block">--</span>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+          <span class="text-[10px] font-bold text-slate-500 block uppercase tracking-wider">Failed</span>
+          <span id="statFailed" class="text-2xl font-bold font-mono text-rose-600 mt-1 block">0</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Student Photo Gallery & Inspection Grid -->
+    <section id="gallerySection" class="hidden space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+        <div class="flex items-center space-x-3">
+          <div class="relative">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+            <input type="text" id="searchFilter" placeholder="Search Roll No / Student ID..." class="bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-4 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-terracotta-600 w-56 sm:w-64" />
+          </div>
+          
+          <div class="flex items-center space-x-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs">
+            <button id="filterAll" class="filter-tab active px-3 py-1 rounded-lg bg-terracotta-600 text-white font-semibold">All (<span id="countFilterAll">0</span>)</button>
+            <button id="filterDone" class="filter-tab px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900 font-medium">Done (<span id="countFilterDone">0</span>)</button>
+            <button id="filterFailed" class="filter-tab px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900 font-medium">Failed (<span id="countFilterFailed">0</span>)</button>
+          </div>
+        </div>
+
+        <div class="text-xs text-slate-500 font-medium">
+          Click <b>✂️ Recrop</b> on any card to explicitly adjust framing, or <b>⬇️</b> to download
+        </div>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div id="galleryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        <!-- Dynamically rendered student photo cards -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Explicit Individual Image Recropper Modal Dialog -->
+  <div id="recropModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[92vh]">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-terracotta-600"></span>
+            <h4 id="recropModalFileName" class="text-sm font-bold text-slate-900 truncate max-w-md font-mono">24STU001.jpg</h4>
+          </div>
+          <p class="text-xs text-slate-500 mt-0.5">Explicit Biometric ID Caliper Recropper — Drag & Resize to position face & shoulders</p>
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <!-- Background preview toggle inside modal -->
+          <div class="flex items-center space-x-1 bg-white p-1 rounded-lg border border-slate-200 text-xs">
+            <button id="recropBgGrid" title="Checkerboard" class="p-1 rounded bg-slate-100 text-slate-800 border border-slate-300">
+              <span class="w-3.5 h-3.5 block bg-transparency-grid rounded-sm"></span>
+            </button>
+            <button id="recropBgWhite" title="Pure White" class="p-1 rounded text-slate-500 hover:text-slate-800">
+              <span class="w-3.5 h-3.5 block bg-white rounded-sm border border-slate-400"></span>
+            </button>
+            <button id="recropBgBlue" title="Passport Blue" class="p-1 rounded text-slate-500 hover:text-slate-800">
+              <span class="w-3.5 h-3.5 block bg-blue-600 rounded-sm"></span>
+            </button>
+          </div>
+
+          <button id="recropCloseBtn" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive Recropper Canvas Stage -->
+      <div class="flex-1 overflow-hidden p-6 flex items-center justify-center bg-slate-100 relative">
+        <div id="recropStageContainer" class="recrop-stage-container rounded-xl overflow-hidden shadow-lg relative max-h-[60vh] max-w-full aspect-auto flex items-center justify-center bg-transparency-grid">
+          
+          <!-- Lossless Cutout Image -->
+          <img id="recropImg" src="" alt="Student Cutout" class="max-h-[60vh] w-auto object-contain select-none pointer-events-none block" />
+          
+          <!-- Draggable / Resizable Crop Overlay Box -->
+          <div id="recropOverlayBox" class="recrop-overlay-box" style="left: 15%; top: 5%; width: 70%; height: 90%;">
+            <!-- Biometric Guideline lines -->
+            <div class="guideline-headroom" title="10% Headroom Clear Zone"></div>
+            <div class="guideline-eye" title="Eye-Level Biometric Axis"></div>
+            <div class="guideline-chin" title="Chin Baseline Axis"></div>
+            <div class="guideline-center-v" title="Facial Midline"></div>
+            
+            <!-- Dimensions caliper badge -->
+            <div class="caliper-tag" id="recropCaliperTag">
+              <span id="recropCaliperLabel">35 × 45 mm (413 × 531 px)</span>
+            </div>
+
+            <!-- 4 Corner Resize Handles -->
+            <div class="crop-resize-handle handle-nw" data-handle="nw"></div>
+            <div class="crop-resize-handle handle-ne" data-handle="ne"></div>
+            <div class="crop-resize-handle handle-sw" data-handle="sw"></div>
+            <div class="crop-resize-handle handle-se" data-handle="se"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Recropper Controls & Save Toolbar -->
+      <div class="px-6 py-4 bg-white border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+        <div class="flex items-center space-x-2">
+          <span class="text-slate-500 font-semibold">Aspect Ratio:</span>
+          <button id="btnRecropAspectPassport" class="px-2.5 py-1 rounded-md bg-terracotta-50 text-terracotta-700 border border-terracotta-300 font-semibold">
+            Passport (35:45)
+          </button>
+          <button id="btnRecropAspectSquare" class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 border border-slate-200 font-medium hover:bg-slate-200">
+            Square (1:1)
+          </button>
+          <button id="btnRecropAspectFree" class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 border border-slate-200 font-medium hover:bg-slate-200">
+            Freeform
+          </button>
+
+          <span class="text-slate-300">|</span>
+
+          <button id="btnRecropAutoCenter" class="px-2.5 py-1 rounded-md bg-amber-50 text-amber-800 border border-amber-300 font-semibold hover:bg-amber-100 flex items-center space-x-1">
+            <i data-lucide="crosshair" class="w-3.5 h-3.5 text-amber-600"></i>
+            <span>Auto Center Face</span>
+          </button>
+        </div>
+
+        <div class="flex items-center space-x-2 w-full sm:w-auto justify-end">
+          <button id="btnRecropCancel" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition">
+            Cancel
+          </button>
+          <button id="btnRecropSave" class="px-6 py-2 rounded-xl bg-terracotta-600 hover:bg-terracotta-700 text-white font-semibold shadow-md shadow-terracotta-600/20 transition flex items-center space-x-1.5">
+            <i data-lucide="check" class="w-4 h-4"></i>
+            <span id="btnRecropSaveText">Save Crop & Update Card</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

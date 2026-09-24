@@ -1,0 +1,243 @@
+/* Mahaguru Institute of Technology - ID Studio
+ * Anti-Slop Architectural Stylesheet
+ * Strict Hierarchy, Collegiate Craft, Crisp Contrast, Distinguishable Typography
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Mahaguru Institute of Technology Brand Palette */
+  --mit-terracotta: #963816;
+  --mit-terracotta-dark: #7a2b0f;
+  --mit-terracotta-light: #b3451d;
+  --mit-terracotta-soft: rgba(150, 56, 22, 0.08);
+
+  --mit-blue: #0052cc;
+  --mit-blue-dark: #003e99;
+  --mit-blue-light: #0066ff;
+  --mit-blue-soft: rgba(0, 82, 204, 0.08);
+
+  --mit-gold: #f59e0b;
+  --mit-gold-light: #fef3c7;
+  --mit-gold-dark: #b45309;
+
+  --mit-pine: #092f20;
+
+  /* Surfaces & Neutral Foundation */
+  --mit-bg: #f8fafc;
+  --mit-surface: #ffffff;
+  --mit-surface-elevated: #ffffff;
+  --mit-surface-subtle: #f1f5f9;
+  --mit-border: #e2e8f0;
+  --mit-border-focus: #0052cc;
+  --mit-text-primary: #0f172a;
+  --mit-text-secondary: #475569;
+  --mit-text-muted: #64748b;
+
+  /* Fonts */
+  --font-collegiate: 'Cinzel', serif;
+  --font-heading: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--mit-bg);
+  color: var(--mit-text-primary);
+  line-height: 1.5;
+}
+
+h1, h2, h3, .font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-collegiate {
+  font-family: var(--font-collegiate);
+  letter-spacing: 0.04em;
+}
+
+.font-mono-tech {
+  font-family: var(--font-mono);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Transparency Checkerboard for Cutouts */
+.bg-transparency-grid {
+  background-color: #ffffff;
+  background-image: 
+    linear-gradient(45deg, #e2e8f0 25%, transparent 25%), 
+    linear-gradient(-45deg, #e2e8f0 25%, transparent 25%), 
+    linear-gradient(45deg, transparent 75%, #e2e8f0 75%), 
+    linear-gradient(-45deg, transparent 75%, #e2e8f0 75%);
+  background-size: 14px 14px;
+  background-position: 0 0, 0 7px, 7px -7px, -7px 0px;
+}
+
+/* Dropzone Hover Transition */
+.dropzone-active {
+  border-color: var(--mit-blue) !important;
+  background-color: rgba(0, 82, 204, 0.04) !important;
+  transform: scale(1.002);
+}
+
+/* Preset Cards */
+.preset-card {
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1.5px solid var(--mit-border);
+}
+
+.preset-card:hover {
+  border-color: #94a3b8;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.preset-card.active {
+  border-color: var(--mit-terracotta) !important;
+  background-color: #fff9f6 !important;
+  box-shadow: 0 0 0 1px var(--mit-terracotta), 0 4px 12px rgba(150, 56, 22, 0.08) !important;
+}
+
+/* Background Option Buttons */
+.bg-opt-btn {
+  transition: all 0.15s ease;
+  border: 1.5px solid var(--mit-border);
+}
+
+.bg-opt-btn:hover {
+  border-color: #94a3b8;
+}
+
+.bg-opt-btn.active {
+  border-color: var(--mit-blue) !important;
+  background-color: rgba(0, 82, 204, 0.05) !important;
+  color: var(--mit-blue) !important;
+  font-weight: 600;
+}
+
+/* Interactive Recropper Stage */
+.recrop-stage-container {
+  position: relative;
+  display: inline-block;
+  user-select: none;
+  max-width: 100%;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.recrop-overlay-box {
+  position: absolute;
+  border: 2px solid #0052cc;
+  box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.65);
+  cursor: move;
+  transition: border-color 0.15s ease;
+}
+
+.recrop-overlay-box:hover {
+  border-color: #2563eb;
+}
+
+/* Biometric Guidance Lines inside Crop Box */
+.guideline-headroom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 10%;
+  height: 1px;
+  border-top: 1px dashed rgba(56, 189, 248, 0.9);
+  pointer-events: none;
+}
+
+.guideline-eye {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 45%;
+  height: 1px;
+  border-top: 1px dashed rgba(245, 158, 11, 0.9);
+  pointer-events: none;
+}
+
+.guideline-chin {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 75%;
+  height: 1px;
+  border-top: 1px dashed rgba(245, 158, 11, 0.9);
+  pointer-events: none;
+}
+
+.guideline-center-v {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  border-left: 1px dashed rgba(59, 130, 246, 0.7);
+  pointer-events: none;
+}
+
+/* Resize Handles */
+.crop-resize-handle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: #0052cc;
+  border: 2px solid #ffffff;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.handle-nw { left: -6px; top: -6px; cursor: nw-resize; }
+.handle-ne { right: -6px; top: -6px; cursor: ne-resize; }
+.handle-sw { left: -6px; bottom: -6px; cursor: sw-resize; }
+.handle-se { right: -6px; bottom: -6px; cursor: se-resize; }
+
+/* Caliper Dimension Badge */
+.caliper-tag {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f8fafc;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Card Micro-interactions */
+.student-card {
+  transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.student-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+}
+
+/* Button Focus Rings */
+button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--mit-blue);
+  outline-offset: 2px;
+}
