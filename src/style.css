@@ -1,9 +1,30 @@
-/* Mahaguru Institute of Technology - ID Studio
- * Anti-Slop Architectural Stylesheet
- * Strict Hierarchy, Collegiate Craft, Crisp Contrast, Distinguishable Typography
- */
-
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-terracotta-50: #fff5f2;
+  --color-terracotta-100: #ffe8e1;
+  --color-terracotta-200: #ffd1c4;
+  --color-terracotta-300: #ffb09e;
+  --color-terracotta-400: #fa7959;
+  --color-terracotta-500: #b3451d;
+  --color-terracotta-600: #963816;
+  --color-terracotta-700: #7a2b0f;
+  --color-terracotta-800: #61210a;
+
+  --color-mitblue-50: #f0f6ff;
+  --color-mitblue-100: #e0edff;
+  --color-mitblue-200: #bad7ff;
+  --color-mitblue-500: #0066ff;
+  --color-mitblue-600: #0052cc;
+  --color-mitblue-700: #003e99;
+
+  --color-saffron-50: #fffbeb;
+  --color-saffron-100: #fef3c7;
+  --color-saffron-200: #fde68a;
+  --color-saffron-500: #f59e0b;
+  --color-saffron-600: #d97706;
+}
 
 :root {
   /* Mahaguru Institute of Technology Brand Palette */
